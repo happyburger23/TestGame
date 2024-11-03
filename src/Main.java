@@ -8,12 +8,15 @@ public class Main {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setResizable(true);
         window.setTitle("Test Game v. 0.0.1");
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-
-        window.pack();
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
+
+        window.pack();
+
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+
+        gamePanel.startGameThread();
     }
 }
