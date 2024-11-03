@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -30,13 +31,13 @@ public class GamePanel extends JPanel implements Runnable {
     //TILEMANAGER INIT
     TileManager tileM = new TileManager(this);
 
-    //KEYHANDLER AND THREAD INIT
+    //KEYHANDLER, PLAYER, OBJECT/ASSET SETTER, COLLISION AND THREAD INIT
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
-
-    //PLAYER INIT
+    public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
+    public SuperObject obj[] = new SuperObject[10]; //Limit of 10 objects to be displayed at same time
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -44,6 +45,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+    }
+
+    public void setUpGame() {
+        aSetter.setObject();
     }
 
     public void startGameThread() {
@@ -89,8 +94,19 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
-        tileM.draw(g2); //draw Tile Manager draw() method. MUST BE DRAWN BEFORE PLAYER
+        //TILE
+        tileM.draw(g2);
+
+        // OBJECT
+        for (int i = 0; i < obj.length; i++) {
+            if (obj[i] != null) { //avoids NullPointerError
+                obj[i].draw(g2, this);
+            }
+        }
+
+        //PLAYER
         player.draw(g2); //draw player draw() method
+
         g2.dispose();
     }
 }
