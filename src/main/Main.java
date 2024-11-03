@@ -8,8 +8,8 @@ public class Main {
 
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setResizable(true);
-        window.setTitle("Test Game v. 0.0.1");
+        window.setResizable(false);
+        window.setTitle("Test Game - Java 21");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

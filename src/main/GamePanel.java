@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,25 +13,23 @@ public class GamePanel extends JPanel implements Runnable {
     public final int tileSize = originalTileSize * scale; //48 pixel resolution
 
     //ratio is 4:3
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-
-    final int screenWidth = tileSize * maxScreenCol; //48 * 16 = 768 pixels
-    final int screenHeight = tileSize * maxScreenRow; //48 * 12 = 576 pixels
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+    public final int screenWidth = tileSize * maxScreenCol; //48 * 16 = 768 pixels
+    public final int screenHeight = tileSize * maxScreenRow; //48 * 12 = 576 pixels
 
     //FPS
     int FPS = 60;
 
+    //TILEMANAGER INIT
+    TileManager tileM = new TileManager(this);
+
+    //KEYHANDLER AND THREAD INIT
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
     //PLAYER INIT
     Player player = new Player(this, keyH);
-
-    //set players default position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -82,7 +81,9 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
-        player.draw(g2);
+
+        tileM.draw(g2); //draw Tile Manager draw() method. MUST BE DRAWN BEFORE PLAYER
+        player.draw(g2); //draw player draw() method
         g2.dispose();
     }
 }
