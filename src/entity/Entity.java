@@ -1,7 +1,5 @@
 package entity;
 
-import org.w3c.dom.css.Rect;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -15,7 +13,10 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
 
-    //collision hitbox
+    //entity collision hitbox
     public Rectangle solidArea;
     public boolean collisionOn = false;
+
+    //item solidArea
+    public int solidAreaDefaultX, solidAreaDefaultY;
 }
